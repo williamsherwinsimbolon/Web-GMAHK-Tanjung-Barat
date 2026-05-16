@@ -1557,3 +1557,59 @@ footer::before {
   font-size: 13.5px;
   line-height: 1.6;
 }
+
+
+/* Sembunyikan saklar kotak checkbox bawaan browser agar tidak kelihatan di web */
+.menu-checkbox {
+  display: none;
+}
+
+/* ===== ATURAN KETIKA DI LAYAR HP (MOBILE VIEW) ===== */
+@media (max-width: 768px) {
+  
+  /* 1. Aktifkan Tombol Hamburger */
+  .hamburger {
+    display: flex !important;
+  }
+
+  /* 2. Ubah struktur menu tulisan menjadi melayang di bawah navbar saat mobile */
+  .nav-links {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 70px; /* Pas di bawah batas bawah navbar */
+    left: 0;
+    right: 0;
+    background: var(--navy); /* Warna background menu mengikuti warna navy gereja */
+    padding: 20px;
+    gap: 15px;
+    border-bottom: 2px solid var(--gold);
+    
+    /* LOGIKA AWAL: Sembunyikan menu ke atas (efek menutup) */
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: all 0.4s ease-in-out; /* Biar efek meluncur ke bawahnya mulus */
+  }
+
+  /* 3. Membuat link menu berbaris rapi ke bawah */
+  .nav-links li {
+    width: 100%;
+    text-align: center;
+  }
+
+  .nav-links a {
+    display: block;
+    padding: 10px;
+  }
+
+  /* ============================================================
+     KUNCI RAHASIA TANDA GAIB (~): 
+     Jika checkbox (.menu-checkbox) dalam posisi DICENTANG/DIKLIK, 
+     maka temukan tag (.nav-links) yang ada di dekatnya, lalu buka ukurannya!
+     ============================================================ */
+  .menu-checkbox:checked ~ .nav-links {
+    max-height: 400px; /* Ukuran tinggi maksimal saat menu meluncur kebuka */
+    opacity: 1; /* Munculkan teksnya */
+  }
+}
