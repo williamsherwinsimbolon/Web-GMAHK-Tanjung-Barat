@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sekolah Sabat - GMAHK Tanjung Barat</title>
+  <link rel="icon" type="image/jpeg" href="https://pathfinderindonesia.wordpress.com/wp-content/uploads/2021/04/logo-advent.jpg?w=1024">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Lato:wght@300;400;700&family=Cinzel:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="artikel-page" data-category="sekolah-sabat">
+  <nav id="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <div class="nav-logo-icon"><img src="https://pathfinderindonesia.wordpress.com/wp-content/uploads/2021/04/logo-advent.jpg?w=1024" alt="Logo Advent"></div>
+        <div class="nav-logo-text"><span class="nav-logo-name">GMAHK Tanjung Barat</span><span class="nav-logo-sub">Advent Hari Ketujuh</span></div>
+      </a>
+      <input type="checkbox" id="menu-toggle" class="menu-checkbox">
+      <ul class="nav-links">
+        <li><a href="index.html#jadwal">Jadwal</a></li>
+        <li><a href="index.html#pelayan-gereja">Pengurus Jemaat</a></li>
+        <li><a href="Kegiatan.html">Kegiatan</a></li>
+        <li><a href="BuletinAcara.html">Buletin</a></li>
+        <li><a href="index.html#artikel">Artikel</a></li>
+        <li><a href="index.html#pembangunan">Pembangunan</a></li>
+      </ul>
+      <label for="menu-toggle" class="hamburger"><span></span><span></span><span></span></label>
+    </div>
+  </nav>
+
+  <header class="article-archive-hero">
+    <div class="section-container">
+      <span class="section-tag">Sekolah Sabat</span>
+      <h1>Belajar Firman Dalam Persekutuan</h1>
+      <p>Bahan bacaan dan refleksi yang mendukung diskusi Sekolah Sabat jemaat setiap minggu.</p>
+      <div class="artikel-tabs archive-tabs">
+        <a href="artikel-renungan-pagi.html" class="artikel-tab">Renungan Pagi</a>
+        <a href="artikel-sekolah-sabat.html" class="artikel-tab active">Sekolah Sabat</a>
+        <a href="artikel-roh-nubuat.html" class="artikel-tab">Roh Nubuat</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="article-archive-main">
+    <div class="section-container">
+      <div class="article-list-heading">
+        <h2>Semua Artikel Sekolah Sabat</h2>
+        <span id="category-count"></span>
+      </div>
+      <div id="category-articles" class="artikel-grid"></div>
+    </div>
+  </main>
+
+  <script src="artikel-data.js"></script>
+  <script src="artikel-utils.js"></script>
+  <script>window.articleSystem.renderCategoryPage(document.body.dataset.category);</script>
+</body>
+</html>
