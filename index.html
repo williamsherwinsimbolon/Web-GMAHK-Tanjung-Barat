@@ -320,54 +320,8 @@
             <div id="pembangunan-bar" class="progress-bar-fill" style="width: 64%"></div>
           </div>
           <div id="pembangunan-progress-text" class="progress-pct">64% tercapai - Mari bersama membangun rumah Tuhan</div>
-
-          <div class="pembangunan-actions">
-            <button type="button" id="edit-pembangunan-btn" class="admin-edit-btn">Edit Data</button>
-          </div>
         </div>
       </div>
-
-      <form id="pembangunan-editor" class="pembangunan-editor" hidden>
-        <div class="editor-grid">
-          <label>
-            Judul Program
-            <input type="text" id="edit-pembangunan-title" required>
-          </label>
-          <label>
-            Foto Utama
-            <input type="text" id="edit-pembangunan-image-1" required>
-          </label>
-          <label>
-            Foto Kedua
-            <input type="text" id="edit-pembangunan-image-2" required>
-          </label>
-          <label>
-            Foto Ketiga
-            <input type="text" id="edit-pembangunan-image-3" required>
-          </label>
-          <label class="editor-wide">
-            Deskripsi
-            <textarea id="edit-pembangunan-desc" rows="3" required></textarea>
-          </label>
-          <label>
-            Target Dana
-            <input type="number" id="edit-pembangunan-target" min="1" step="1000" required>
-          </label>
-          <label>
-            Dana Terkumpul
-            <input type="number" id="edit-pembangunan-collected" min="0" step="1000" required>
-          </label>
-          <label class="editor-wide">
-            Pesan Progress
-            <input type="text" id="edit-pembangunan-message" required>
-          </label>
-        </div>
-        <div class="editor-actions">
-          <button type="submit" class="admin-save-btn">Simpan</button>
-          <button type="button" id="cancel-pembangunan-edit" class="admin-cancel-btn">Batal</button>
-          <button type="button" id="reset-pembangunan-data" class="admin-reset-btn">Reset</button>
-        </div>
-      </form>
     </div>
   </section>
 
@@ -436,6 +390,7 @@
     </div>
   </footer>
 
+  <script src="theme.js"></script>
   <script src="artikel-data.js"></script>
   <script src="artikel-utils.js"></script>
   <script>
@@ -445,138 +400,6 @@
         window.articleSystem.getLatestArticles(3)
       );
     }
-  </script>
-
-  <script>
-    const pembangunanDefaults = {
-      title: 'Renovasi Gedung Utama',
-      description: 'Renovasi total gedung kebaktian utama untuk kenyamanan ibadah jemaat.',
-      images: ['image3.jpeg', 'Image 4.jpeg', 'Image 5.jpeg'],
-      target: 120000000,
-      collected: 76800000,
-      message: 'Mari bersama membangun rumah Tuhan'
-    };
-
-    const pembangunanFields = {
-      title: document.getElementById('pembangunan-title'),
-      description: document.getElementById('pembangunan-desc'),
-      images: [
-        document.getElementById('pembangunan-image-1'),
-        document.getElementById('pembangunan-image-2'),
-        document.getElementById('pembangunan-image-3')
-      ],
-      target: document.getElementById('pembangunan-target'),
-      collected: document.getElementById('pembangunan-collected'),
-      bar: document.getElementById('pembangunan-bar'),
-      progressText: document.getElementById('pembangunan-progress-text'),
-      editor: document.getElementById('pembangunan-editor'),
-      editButton: document.getElementById('edit-pembangunan-btn')
-    };
-
-    const pembangunanInputs = {
-      title: document.getElementById('edit-pembangunan-title'),
-      description: document.getElementById('edit-pembangunan-desc'),
-      images: [
-        document.getElementById('edit-pembangunan-image-1'),
-        document.getElementById('edit-pembangunan-image-2'),
-        document.getElementById('edit-pembangunan-image-3')
-      ],
-      target: document.getElementById('edit-pembangunan-target'),
-      collected: document.getElementById('edit-pembangunan-collected'),
-      message: document.getElementById('edit-pembangunan-message')
-    };
-
-    const formatRupiah = (value) => new Intl.NumberFormat('id-ID', {
-      style: 'currency',
-      currency: 'IDR',
-      maximumFractionDigits: 0
-    }).format(value);
-
-    const getPembangunanData = () => {
-      const saved = localStorage.getItem('pembangunanRumahTuhan');
-      if (!saved) return pembangunanDefaults;
-
-      try {
-        return { ...pembangunanDefaults, ...JSON.parse(saved) };
-      } catch {
-        localStorage.removeItem('pembangunanRumahTuhan');
-        return pembangunanDefaults;
-      }
-    };
-
-    const setEditorValues = (data) => {
-      const images = data.images || [data.image, ...pembangunanDefaults.images.slice(1)];
-
-      pembangunanInputs.title.value = data.title;
-      pembangunanInputs.description.value = data.description;
-      pembangunanInputs.images.forEach((input, index) => {
-        input.value = images[index] || pembangunanDefaults.images[index];
-      });
-      pembangunanInputs.target.value = data.target;
-      pembangunanInputs.collected.value = data.collected;
-      pembangunanInputs.message.value = data.message;
-    };
-
-    const renderPembangunan = (data) => {
-      const target = Number(data.target) || 1;
-      const collected = Number(data.collected) || 0;
-      const percent = Math.round((collected / target) * 100);
-      const barPercent = Math.min(percent, 100);
-      const images = data.images || [data.image, ...pembangunanDefaults.images.slice(1)];
-
-      pembangunanFields.title.textContent = data.title;
-      pembangunanFields.description.textContent = data.description;
-      pembangunanFields.images.forEach((image, index) => {
-        image.src = images[index] || pembangunanDefaults.images[index];
-        image.alt = `${data.title} ${index + 1}`;
-      });
-      pembangunanFields.target.textContent = formatRupiah(target);
-      pembangunanFields.collected.textContent = formatRupiah(collected);
-      pembangunanFields.bar.style.width = `${barPercent}%`;
-      pembangunanFields.progressText.textContent = `${percent}% tercapai - ${data.message}`;
-    };
-
-    const savePembangunanData = (data) => {
-      localStorage.setItem('pembangunanRumahTuhan', JSON.stringify(data));
-      renderPembangunan(data);
-      setEditorValues(data);
-    };
-
-    const initialPembangunanData = getPembangunanData();
-    renderPembangunan(initialPembangunanData);
-    setEditorValues(initialPembangunanData);
-
-    pembangunanFields.editButton.addEventListener('click', () => {
-      pembangunanFields.editor.hidden = false;
-      pembangunanFields.editButton.hidden = true;
-      pembangunanInputs.title.focus();
-    });
-
-    document.getElementById('cancel-pembangunan-edit').addEventListener('click', () => {
-      setEditorValues(getPembangunanData());
-      pembangunanFields.editor.hidden = true;
-      pembangunanFields.editButton.hidden = false;
-    });
-
-    document.getElementById('reset-pembangunan-data').addEventListener('click', () => {
-      localStorage.removeItem('pembangunanRumahTuhan');
-      renderPembangunan(pembangunanDefaults);
-      setEditorValues(pembangunanDefaults);
-    });
-
-    pembangunanFields.editor.addEventListener('submit', (event) => {
-      event.preventDefault();
-      savePembangunanData({
-        title: pembangunanInputs.title.value.trim(),
-        description: pembangunanInputs.description.value.trim(),
-        images: pembangunanInputs.images.map((input) => input.value.trim()),
-        target: Number(pembangunanInputs.target.value),
-        collected: Number(pembangunanInputs.collected.value),
-        message: pembangunanInputs.message.value.trim()
-      });
-      pembangunanFields.editor.hidden = true;
-      pembangunanFields.editButton.hidden = false;
-    });
   </script>
 </body>
 </html>
